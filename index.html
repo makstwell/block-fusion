@@ -357,6 +357,7 @@ function render(){
   const board=$("#board");
   board.style.gridTemplateColumns=`repeat(${state.size},var(--cell))`;
   board.innerHTML="";
+  boardCells=[];
   for(let r=0;r<state.size;r++)for(let c=0;c<state.size;c++){
     const el=document.createElement("div");el.className="cell";el.dataset.r=r;el.dataset.c=c;
     if(state.board[r][c]){el.classList.add("filled");el.style.setProperty("--c",state.board[r][c])}
@@ -540,88 +541,153 @@ function preview(rr,cc,shape,ok){
   if(d)d.previewEls=els;
 }
 function startDrag(ev){
+  if(ev.button!==undefined && ev.button!==0)return;
   ev.preventDefault();
+  ev.stopPropagation();
   if(state.paused)return;
-  ensureAudio();
-  const slot=ev.currentTarget,i=+slot.dataset.i,p=state.pieces[i];
-  if(!p||p.used)return;
 
-  const source=slot.querySelector('.piece-grid');
+  ensureAudio();
+
+  const slot=ev.currentTarget;
+  const i=Number(slot.dataset.i);
+  const p=state.pieces[i];
+  if(!p||p.used||state.dragging)return;
+
+  const source=slot.querySelector(".piece-grid");
+  if(!source)return;
+
   const ghost=source.cloneNode(true);
-  ghost.classList.add('drag-ghost');
-  const sw=p.shape[0].length, sh=p.shape.length;
+  ghost.classList.add("drag-ghost");
+
+  const sw=p.shape[0].length;
+  const sh=p.shape.length;
   ghost.style.gridTemplateColumns=`repeat(${sw},18px)`;
   ghost.style.width=`${sw*18+(sw-1)*3}px`;
   ghost.style.height=`${sh*18+(sh-1)*3}px`;
+  ghost.style.position="fixed";
+  ghost.style.pointerEvents="none";
+  ghost.style.margin="0";
+  ghost.style.left=`${ev.clientX}px`;
+  ghost.style.top=`${ev.clientY}px`;
+  ghost.style.transform="translate3d(-50%,-50%,0) scale(1.08)";
   document.body.appendChild(ghost);
 
-  const pos=getBoardPosition();
-  state.dragging={
-    i,p,ghost,last:null,rect:pos.rect,cell:pos.cell,step:pos.cell-parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap')),
-    raf:0,queued:null,previewEls:[],pointerId:ev.pointerId
-  };
-  try{slot.setPointerCapture(ev.pointerId)}catch(e){}
-  updateDrag(ev,true);
-  window.addEventListener('pointermove',moveDrag,{passive:false});
-  window.addEventListener('pointerup',endDrag,{passive:false,once:true});
-  window.addEventListener('pointercancel',endDrag,{passive:false,once:true});
-}
-function updateDrag(ev,immediate=false){
-  const d=state.dragging;if(!d)return;
-  const x=ev.clientX,y=ev.clientY;
-  const sw=d.p.shape[0].length, sh=d.p.shape.length;
+  const board=$("#board");
+  const firstCell=board?.querySelector(".cell");
+  if(!board||!firstCell){
+    ghost.remove();
+    return;
+  }
 
-  // The visual block is centered exactly on the finger/cursor.
+  const cellRect=firstCell.getBoundingClientRect();
+  const boardRect=board.getBoundingClientRect();
+  const cs=getComputedStyle(board);
+  const gap=parseFloat(cs.gap)||0;
+  const step=cellRect.width+gap;
+
+  state.dragging={
+    i,p,ghost,
+    last:null,
+    raf:0,
+    queued:null,
+    previewEls:[],
+    pointerId:ev.pointerId,
+    boardRect,
+    firstCellRect:cellRect,
+    step,
+    cellSize:cellRect.width
+  };
+
+  try{slot.setPointerCapture(ev.pointerId)}catch(e){}
+
+  updateDrag(ev,true);
+
+  document.addEventListener("pointermove",moveDrag,{passive:false});
+  document.addEventListener("pointerup",endDrag,{passive:false,once:true});
+  document.addEventListener("pointercancel",endDrag,{passive:false,once:true});
+}
+
+function updateDrag(ev,immediate=false){
+  const d=state.dragging;
+  if(!d)return;
+
+  const x=ev.clientX;
+  const y=ev.clientY;
+
+  // The ghost is centered exactly at the pointer.
   d.ghost.style.left=`${x}px`;
   d.ghost.style.top=`${y}px`;
-  d.ghost.style.transform=`translate3d(-50%,-50%,0) scale(1.08)`;
+  d.ghost.style.transform="translate3d(-50%,-50%,0) scale(1.08)";
 
   d.queued={x,y};
+
   const calc=()=>{
     d.raf=0;
     if(!state.dragging||!d.queued)return;
-    const q=d.queued,{rect,cell,step}=d;
-    const gap=cell-step;
-    const innerLeft=rect.left+gap;
-    const innerTop=rect.top+gap;
 
-    // Convert the pointer position to the top-left board cell of the shape,
-    // using the same geometric center as the visual ghost.
-    const cc=Math.round((q.x-innerLeft-step/2)/cell-(sw-1)/2);
-    const rr=Math.round((q.y-innerTop-step/2)/cell-(sh-1)/2);
+    const q=d.queued;
+    const first=d.firstCellRect;
+    const step=d.step;
+    const sw=d.p.shape[0].length;
+    const sh=d.p.shape.length;
+
+    // Center of board cell [0,0].
+    const c0x=first.left+first.width/2;
+    const c0y=first.top+first.height/2;
+
+    // Center the whole shape under the pointer.
+    const centerCol=(q.x-c0x)/step;
+    const centerRow=(q.y-c0y)/step;
+    const cc=Math.round(centerCol-(sw-1)/2);
+    const rr=Math.round(centerRow-(sh-1)/2);
+
     if(!d.last||d.last.rr!==rr||d.last.cc!==cc){
       d.last={rr,cc};
       preview(rr,cc,d.p.shape,canPlace(d.p.shape,rr,cc));
     }
   };
+
   if(immediate)calc();
   else if(!d.raf)d.raf=requestAnimationFrame(calc);
 }
+
 function moveDrag(ev){
   if(!state.dragging)return;
   ev.preventDefault();
   updateDrag(ev,false);
 }
+
 function endDrag(ev){
   if(!state.dragging)return;
   ev.preventDefault();
+
   const d=state.dragging;
   updateDrag(ev,true);
-  window.removeEventListener('pointermove',moveDrag);
-  window.removeEventListener('pointercancel',endDrag);
+
+  document.removeEventListener("pointermove",moveDrag);
+  document.removeEventListener("pointercancel",endDrag);
+
   if(d.raf)cancelAnimationFrame(d.raf);
-  const {rr,cc}=d.last||{rr:-99,cc:-99};
-  const ok=canPlace(d.p.shape,rr,cc);
-  if(d.ghost.parentNode)d.ghost.remove();
-  if(d.previewEls)for(const e of d.previewEls)e.classList.remove('preview-ok','preview-bad');
+
+  const last=d.last||{rr:-999,cc:-999};
+  const ok=canPlace(d.p.shape,last.rr,last.cc);
+
+  if(d.ghost?.parentNode)d.ghost.remove();
+  if(d.previewEls){
+    for(const e of d.previewEls)e.classList.remove("preview-ok","preview-bad");
+  }
+
   state.dragging=null;
+
   if(ok){
-    place(d.p.shape,rr,cc,d.p.color);d.p.used=true;
-    if(state.sound)tone(330,.045,'triangle');
+    place(d.p.shape,last.rr,last.cc,d.p.color);
+    d.p.used=true;
+    if(state.sound)tone(330,.045,"triangle");
     if(state.vibration)vibrate(8);
     finishMove();
   }
 }
+
 function vibrate(v){try{if(navigator.vibrate)navigator.vibrate(v)}catch(e){}}
 function ensureAudio(){
   if(!audioCtx)try{audioCtx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}
