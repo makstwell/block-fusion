@@ -556,10 +556,7 @@ function startDrag(ev){
   ghost.style.gridTemplateColumns=`repeat(${p.shape[0].length},18px)`;
   document.body.appendChild(ghost);
   const pos=getBoardPosition();
-  const rect=slot.getBoundingClientRect();
-  // Keep the piece under the exact point where it was grabbed.
-  const grabX=ev.clientX-rect.left, grabY=ev.clientY-rect.top;
-  state.dragging={i,p,ghost,last:null,rect:pos.rect,cell:pos.cell,raf:0,queued:null,previewEls:[],grabX,grabY};
+  state.dragging={i,p,ghost,last:null,rect:pos.rect,cell:pos.cell,raf:0,queued:null,previewEls:[]};
   try{slot.releasePointerCapture?.(ev.pointerId)}catch(e){}
   updateDrag(ev,true);
   window.addEventListener('pointermove',moveDrag,{passive:false});
@@ -569,8 +566,10 @@ function startDrag(ev){
 function updateDrag(ev,immediate=false){
   const d=state.dragging;if(!d)return;
   const x=ev.clientX,y=ev.clientY;
-  // Visual follows the pointer immediately, with no CSS transition.
-  d.ghost.style.transform=`translate3d(${x-d.grabX}px,${y-d.grabY-55}px,0) scale(1.08)`;
+  // Keep the visual block exactly centered on the pointer/finger.
+  // No artificial lift/offset: the block follows the cursor 1:1.
+  const gw=d.ghost.offsetWidth||36, gh=d.ghost.offsetHeight||36;
+  d.ghost.style.transform=`translate3d(${x-gw/2}px,${y-gh/2}px,0) scale(1.08)`;
   d.queued={x,y};
   const calc=()=>{
     d.raf=0;
