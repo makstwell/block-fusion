@@ -245,6 +245,228 @@ text-shadow:0 10px 50px rgba(124,92,255,.25)}
 .purchase-icon{font-size:72px;animation:rewardPop .65s cubic-bezier(.1,1.5,.3,1)}
 @keyframes rewardPop{from{transform:scale(.1) rotate(-20deg);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes popIn{from{opacity:0}to{opacity:1}}
+
+.cell.place-pop{
+  animation:placePop .11s cubic-bezier(.2,.9,.3,1) both;
+  transform-origin:center;
+}
+@keyframes placePop{
+  0%{transform:scale(.94);filter:brightness(1)}
+  55%{transform:scale(1.07);filter:brightness(1.18)}
+  100%{transform:scale(1);filter:brightness(1)}
+}
+
+/* ===== BLOCK FUSION — PREMIUM VISUAL PASS ===== */
+:root{
+  --bg1:#050812;
+  --bg2:#0b1224;
+  --panel:rgba(18,24,42,.72);
+  --line:rgba(255,255,255,.085);
+  --text:#f8faff;
+  --muted:#8f9ab2;
+  --accent:#7c6cff;
+  --good:#55e6b0;
+  --bad:#ff5d78;
+  --cell:min(10.5vw,52px);
+  --gap:4px;
+}
+html,body{
+  background:
+    radial-gradient(900px 500px at 50% -10%,rgba(103,83,255,.20),transparent 62%),
+    radial-gradient(700px 500px at 100% 75%,rgba(50,220,205,.10),transparent 60%),
+    linear-gradient(160deg,#030610,#0a1020 58%,#060914);
+}
+#app{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+.game{gap:12px}
+.topbar{
+  min-height:58px;
+  padding:8px 10px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:20px;
+  background:linear-gradient(180deg,rgba(24,31,53,.72),rgba(10,15,28,.58));
+  box-shadow:0 12px 35px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.06);
+  backdrop-filter:blur(18px);
+}
+.brand-mini{font-size:16px;letter-spacing:-.5px}
+.brand-mini span{color:#9d91ff}
+.score strong{font-size:29px;letter-spacing:-1px}
+.score small,.best small{font-size:9px;letter-spacing:1.5px;color:#727e98}
+.best b{font-size:19px}
+.combo{
+  min-height:25px;
+  font-size:13px;
+  letter-spacing:1px;
+  text-shadow:0 0 18px rgba(255,216,102,.45);
+}
+.board-wrap{padding:2px 0}
+.board{
+  gap:5px;
+  padding:7px;
+  border-radius:25px;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018)),
+    rgba(3,7,17,.72);
+  border:1px solid rgba(255,255,255,.11);
+  box-shadow:
+    0 28px 65px rgba(0,0,0,.35),
+    0 0 0 1px rgba(124,108,255,.06),
+    inset 0 1px 0 rgba(255,255,255,.08),
+    inset 0 -18px 35px rgba(0,0,0,.12);
+}
+.cell{
+  border-radius:9px;
+  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+  border:1px solid rgba(255,255,255,.025);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  transition:transform .11s ease,background .11s ease,box-shadow .11s ease;
+}
+.cell.filled{
+  border:0;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--c) 94%,white 6%),var(--c));
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.30),
+    inset 2px 0 0 rgba(255,255,255,.08),
+    inset 0 -3px 0 rgba(0,0,0,.15),
+    0 5px 12px color-mix(in srgb,var(--c) 24%,transparent);
+}
+.cell.filled::after{
+  content:"";
+  position:absolute;
+  left:2px;right:2px;top:2px;
+  height:34%;
+  border-radius:7px;
+  background:linear-gradient(180deg,rgba(255,255,255,.18),transparent);
+  pointer-events:none;
+}
+.cell.preview-ok{
+  background:rgba(85,230,176,.30);
+  border:1px solid rgba(115,255,205,.55);
+  box-shadow:0 0 18px rgba(85,230,176,.18),inset 0 0 0 1px rgba(255,255,255,.12);
+}
+.cell.preview-bad{
+  background:rgba(255,93,120,.28);
+  border:1px solid rgba(255,93,120,.48);
+  box-shadow:0 0 15px rgba(255,93,120,.14);
+}
+.pieces{
+  gap:9px;
+  min-height:108px;
+  padding:0 2px;
+}
+.piece-slot{
+  min-height:104px;
+  border-radius:20px;
+  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+  border:1px solid rgba(255,255,255,.075);
+  box-shadow:0 12px 28px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.045);
+  transition:transform .14s ease,border-color .14s ease,background .14s ease;
+}
+.piece-slot:active{
+  transform:scale(.965);
+  background:rgba(255,255,255,.075);
+}
+.piece-grid{gap:4px}
+.piece-cell{
+  width:19px;height:19px;border-radius:5px;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--pc) 90%,white 10%),var(--pc));
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.30),
+    inset 0 -2px 0 rgba(0,0,0,.12),
+    0 4px 9px rgba(0,0,0,.25);
+  position:relative;
+}
+.piece-cell::after{
+  content:"";
+  position:absolute;left:2px;right:2px;top:2px;height:35%;
+  border-radius:4px;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent);
+}
+.hud-actions{gap:8px}
+.action{
+  padding:11px 8px;
+  border-radius:16px;
+  background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.035));
+  border:1px solid rgba(255,255,255,.075);
+  color:#dce2f2;
+  box-shadow:0 8px 20px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.04);
+}
+.action:active{transform:scale(.97)}
+.menu .logo{
+  text-shadow:0 12px 45px rgba(124,108,255,.22);
+}
+.menu-card{
+  background:linear-gradient(150deg,rgba(24,31,53,.72),rgba(9,14,27,.68));
+  border-color:rgba(255,255,255,.085);
+  box-shadow:0 30px 70px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.06);
+}
+.primary{
+  background:linear-gradient(135deg,#7668ff,#48dcb1);
+  box-shadow:0 15px 35px rgba(100,91,255,.22),inset 0 1px 0 rgba(255,255,255,.25);
+}
+.secondary,.mode{
+  background:rgba(255,255,255,.045);
+}
+@media(max-width:380px){
+  .topbar{padding:7px 8px}
+  .board{gap:4px;padding:6px}
+  .pieces{gap:7px}
+  .piece-slot{min-height:98px}
+  .action{font-size:12px}
+}
+
+
+/* ===== SHOP V3 / COIN STORE ===== */
+.coin-shop{padding:20px}
+.coin-shop-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.coin-shop-head small{display:block;color:#9da8bf;margin-top:3px}
+.coin-note{padding:12px 14px;border-radius:14px;background:rgba(124,92,255,.10);border:1px solid rgba(255,255,255,.08);color:#aeb8ce;font-size:12px;line-height:1.4;margin-bottom:14px}
+.coin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.coin-pack{position:relative;min-height:142px;padding:14px 10px;border-radius:18px;background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#fff}
+.coin-pack:active{transform:scale(.97)}
+.coin-pack .coin-big{font-size:30px;filter:drop-shadow(0 4px 10px rgba(255,210,70,.35))}
+.coin-pack strong{font-size:22px}
+.coin-pack small{color:#9da8bf}
+.coin-pack>b:last-child{margin-top:7px;background:linear-gradient(135deg,#7c5cff,#5fe6c1);padding:7px 14px;border-radius:11px}
+.coin-pack.featured{border-color:rgba(124,92,255,.65);box-shadow:0 0 25px rgba(124,92,255,.14)}
+.best-value{position:absolute;top:7px;right:7px;font-size:8px!important;color:#8ff5d1!important;background:rgba(95,230,193,.12)!important;padding:4px 6px!important;border-radius:7px}
+.shop-banner{cursor:pointer}
+.shop-card .card-btn.buyable{box-shadow:0 7px 18px rgba(124,92,255,.18)}
+@media(max-width:380px){.coin-grid{gap:7px}.coin-pack{min-height:132px}.coin-shop{padding:15px}}
+
+
+/* ===== PROGRESSION / PROFILE / MODES V3 ===== */
+.profile-modal,.ach-modal,.daily-modal,.modes-modal,.chest-modal{padding:20px;max-height:82vh;overflow:auto}
+.profile-hero{display:flex;gap:14px;align-items:center;padding:15px;border-radius:20px;background:linear-gradient(135deg,rgba(124,92,255,.24),rgba(95,230,193,.08));border:1px solid rgba(255,255,255,.08)}
+.avatar{width:58px;height:58px;border-radius:18px;display:grid;place-items:center;font-weight:1000;font-size:18px;background:linear-gradient(135deg,#7c5cff,#5fe6c1);box-shadow:0 10px 30px #0006}
+.profile-level{font-size:10px;letter-spacing:2px;color:#8ff5d1;font-weight:900}.profile-hero h2{margin:3px 0 7px}
+.xpbar,.taskbar{height:7px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden}.xpbar i,.taskbar i{display:block;height:100%;background:linear-gradient(90deg,#7c5cff,#5fe6c1);border-radius:inherit}
+.profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:12px 0}.profile-stats div{padding:12px 4px;text-align:center;border-radius:14px;background:rgba(255,255,255,.045)}.profile-stats b{display:block;font-size:18px}.profile-stats small,.mode-stat small{color:#8e98af;font-size:9px}
+.mode-stat{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:12px;padding:12px;margin:7px 0;border-radius:13px;background:rgba(255,255,255,.045)}.mode-stat b{font-size:18px}
+.achievement-grid{display:grid;gap:8px;margin:14px 0}.achievement{display:flex;gap:11px;padding:11px;border-radius:15px;background:rgba(255,255,255,.035);opacity:.45}.achievement.done{opacity:1;background:linear-gradient(90deg,rgba(124,92,255,.14),rgba(95,230,193,.06));border:1px solid rgba(95,230,193,.18)}.ach-icon{font-size:27px;width:36px;text-align:center}.achievement b,.achievement small,.achievement em{display:block}.achievement small{color:#a2abc0;margin:2px 0 4px}.achievement em{font-size:10px;color:#ffd54a;font-style:normal}
+.daily-task{padding:13px;border-radius:16px;background:rgba(255,255,255,.045);margin:8px 0}.daily-task-top{display:flex;justify-content:space-between}.daily-task-top span{color:#ffd54a;font-size:11px}.daily-task small{display:block;color:#939eb5;margin:4px 0 9px}.task-foot{display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:#909bb1}.task-foot b{color:#8ff5d1}
+.mode-card{width:100%;display:grid;grid-template-columns:42px 1fr 20px;gap:10px;align-items:center;text-align:left;padding:13px;margin:7px 0;border-radius:16px;background:rgba(255,255,255,.045);border:1px solid transparent;color:#fff}.mode-card.selected{border-color:rgba(124,92,255,.65);background:rgba(124,92,255,.12)}.mode-card>span{font-size:26px;text-align:center}.mode-card b,.mode-card small{display:block}.mode-card small{color:#939eb5;margin-top:3px;font-size:10px}.mode-card i{font-style:normal;color:#8ff5d1}.chest-modal{text-align:center}.chest-glow{font-size:100px;filter:drop-shadow(0 0 35px rgba(124,92,255,.7));animation:chestPulse 1s ease-in-out infinite alternate}.chest-reward{font-size:34px;font-weight:1000;color:#ffd54a}@keyframes chestPulse{to{transform:scale(1.08) rotate(2deg);filter:drop-shadow(0 0 55px rgba(95,230,193,.8))}}
+.profile-button,.meta-button{position:relative}.meta-badge{position:absolute;top:-5px;right:-4px;min-width:16px;height:16px;padding:0 4px;border-radius:99px;background:#ff5c7c;color:white;font-size:9px;display:grid;place-items:center}
+@media(max-width:380px){.profile-stats b{font-size:15px}.profile-modal,.ach-modal,.daily-modal,.modes-modal{padding:14px}}
+
+
+.meta-panel{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin:10px 0}
+.meta-button{position:relative;min-height:54px;border-radius:14px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07);color:#dfe5f2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:17px}
+.meta-button span{font-size:8px;font-weight:800;color:#929db5}.meta-button:active{transform:scale(.96)}
+@media(max-width:380px){.meta-panel{gap:4px}.meta-button{min-height:48px}}
+
+.mode-timer{position:fixed;top:calc(env(safe-area-inset-top) + 74px);left:50%;transform:translateX(-50%);z-index:50;padding:8px 14px;border-radius:99px;background:rgba(10,15,30,.88);border:1px solid rgba(124,92,255,.4);font-weight:1000;box-shadow:0 8px 25px #0006}
+
+/* ===== MEGA V4 VISUAL SYSTEMS ===== */
+.field-event{position:fixed;left:50%;top:26%;transform:translate(-50%,-20px) scale(.8);opacity:0;z-index:120;padding:12px 18px;border-radius:18px;background:linear-gradient(135deg,rgba(18,25,48,.96),rgba(40,28,82,.96));border:1px solid rgba(124,92,255,.55);box-shadow:0 18px 50px #0009,0 0 35px rgba(124,92,255,.22);pointer-events:none;transition:.3s cubic-bezier(.2,.9,.3,1)}.field-event.show{opacity:1;transform:translate(-50%,0) scale(1)}
+.season-modal,.challenge-modal,.rank-modal{padding:20px;text-align:center;max-height:82vh;overflow:auto}.season-logo{font-size:65px;filter:drop-shadow(0 0 25px #7c5cff);animation:seasonFloat 2s ease-in-out infinite}@keyframes seasonFloat{50%{transform:translateY(-6px) rotate(3deg)}}
+.season-kicker{font-size:10px;letter-spacing:3px;color:#8ff5d1;font-weight:1000}.season-modal h2{font-size:30px;margin:4px 0}.season-modal p{color:#9ca7bd}
+.season-level{display:flex;justify-content:space-between;margin:15px 0 6px}.season-level span{color:#9ca7bd;font-size:11px}.seasonbar{height:9px;border-radius:99px;background:#ffffff12;overflow:hidden}.seasonbar i{height:100%;display:block;background:linear-gradient(90deg,#7c5cff,#5fe6c1);border-radius:inherit}.season-track{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:18px 0}.season-node{min-height:76px;border-radius:14px;padding:8px 3px;background:#ffffff06;border:1px solid #ffffff0d;display:flex;flex-direction:column;justify-content:center}.season-node.unlocked{border-color:#5fe6c144;background:#5fe6c10d}.season-node b{font-size:12px}.season-node span{font-size:8px;color:#98a3ba;margin-top:5px}
+.challenge-icon{font-size:55px;filter:drop-shadow(0 0 18px #7c5cff)}.challenge-progress{padding:15px;border-radius:16px;background:#ffffff06;margin:15px 0}.challenge-progress b{display:block;margin-bottom:8px}.challenge-reward{padding:13px;border-radius:14px;background:#ffd54a0d;color:#c9b57a}.challenge-done{margin:14px;color:#8ff5d1;font-weight:1000;letter-spacing:2px}
+.rank-row{display:grid;grid-template-columns:34px 55px 1fr 75px;align-items:center;gap:5px;text-align:left;padding:12px;border-radius:13px;background:#ffffff05;margin:6px 0}.rank-row strong{text-align:right;font-size:17px}.rank-row small{text-align:right;color:#77839b;font-size:8px}.rank-row:nth-child(2){border:1px solid #ffd54a55}.empty-rank{padding:30px;color:#8994aa}
+.special-hud{position:fixed;right:12px;top:calc(env(safe-area-inset-top) + 90px);z-index:20;padding:8px 10px;border-radius:12px;background:#10172bdb;border:1px solid #ffffff12;font-size:10px;font-weight:900}
+.streak-hud{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 92px);transform:translateX(-50%);z-index:20;font-weight:1000;font-size:12px;letter-spacing:1px;color:#ffd54a;text-shadow:0 0 18px #ff9d2e;pointer-events:none}
+.mega-shop-badge{display:inline-block;padding:3px 6px;border-radius:7px;background:#ff5c7c22;color:#ff8da4;font-size:8px;font-weight:1000}
+@media(max-width:380px){.season-modal,.challenge-modal,.rank-modal{padding:14px}.season-track{gap:4px}.rank-row{grid-template-columns:28px 45px 1fr 65px}}
+
 </style>
 </head>
 <body>
@@ -454,10 +676,16 @@ function clearLines(lines){
   set.forEach(key=>{const [r,c]=key.split(",").map(Number);state.board[r][c]=null});
   const n=lines.rows.length+lines.cols.length;
   if(n){
-    state.combo++; state.maxCombo=Math.max(state.maxCombo,state.combo);
+    state.combo++;challengeProgress("combo",state.combo); state.maxCombo=Math.max(state.maxCombo,state.combo);
     const base=[0,100,250,450,700,1000][Math.min(n,5)];
     state.score+=base+(state.combo>1?Math.round(base*(state.combo-1)*.18):0);
-    state.lines+=n;
+    state.lines+=n;challengeProgress("lines",state.totalLines+n);megaXP(n*25);
+    state.totalLines+=n;
+    state.totalScore+=base+(state.combo>1?Math.round(base*(state.combo-1)*.18):0);
+    addXP(n*35 + Math.floor((base+(state.combo>1?Math.round(base*(state.combo-1)*.18):0))/100));
+    updateDaily(n,base+(state.combo>1?Math.round(base*(state.combo-1)*.18):0),state.combo,0);
+    checkAchievements(state.score,state.combo);
+    saveMeta();
     const reward=(n*15)+(n>=2?25*n:0)+(state.combo>1?state.combo*5:0);
     state.coins+=reward; saveShop();
     if(state.vibration) vibrate(n>=2?[25,35,25]:30);
@@ -499,7 +727,15 @@ function checkGameOver(){
   if(!possible)gameOver();
 }
 function gameOver(){
-  state.games++;persist();
+  state.totalGames++;updateDaily(0,0,state.maxCombo,1);
+  const st=state.size===8?state.stats8:state.stats10;
+  st.best=Math.max(st.best,state.score);st.lines+=state.lines;st.games++;
+  state.maxCombo=Math.max(state.maxCombo,state.combo||0);
+  state.totalScore=Math.max(state.totalScore,state.score);
+  checkAchievements(state.score,state.maxCombo);
+  saveMeta();persist();
+  const timer=$("#modeTimer");if(timer)timer.remove();
+  if(modeTimerHandle){clearInterval(modeTimerHandle);modeTimerHandle=null}
   showModal(`<h2>GAME OVER</h2>
     <p>Твой результат</p><div style="font-size:42px;font-weight:950">${fmt(state.score)}</div>
     <div class="stats">
@@ -520,7 +756,9 @@ function showMenu(){
   $("#game").classList.add("hidden");$("#menu").classList.remove("hidden");
   state.paused=false;updateHud();
 }
-function startGame(){ensureAudio();$("#menu").classList.add("hidden");$("#game").classList.remove("hidden");resetBoard()}
+function startGame(){
+resetDailyIfNeeded();saveMeta();
+ensureAudio();$("#menu").classList.add("hidden");$("#game").classList.remove("hidden");resetBoard()}
 let boardCells=[];
 function getBoardPosition(){
   const rect=$("#board").getBoundingClientRect();
@@ -612,9 +850,12 @@ function updateDrag(ev,immediate=false){
   if(!d)return;
 
   const x=ev.clientX;
-  const y=ev.clientY;
+  // On touch, lift the figure above the finger so the placement cells stay visible.
+  // Mouse/desktop remains exactly centered on the cursor.
+  const touchLift=(ev.pointerType==="touch")?78:0;
+  const y=ev.clientY-touchLift;
 
-  // The ghost is centered exactly at the pointer.
+  // The ghost is centered at the adjusted pointer position.
   d.ghost.style.left=`${x}px`;
   d.ghost.style.top=`${y}px`;
   d.ghost.style.transform="translate3d(-50%,-50%,0) scale(1.08)";
@@ -682,9 +923,29 @@ function endDrag(ev){
   if(ok){
     place(d.p.shape,last.rr,last.cc,d.p.color);
     d.p.used=true;
+
+    // Small, fast settle animation: the piece is already fixed immediately.
+    const placedCells=[];
+    for(let r=0;r<d.p.shape.length;r++){
+      for(let c=0;c<d.p.shape[r].length;c++){
+        if(d.p.shape[r][c]){
+          const cell=boardCells[(last.rr+r)*state.size+(last.cc+c)];
+          if(cell){
+            cell.classList.remove("place-pop");
+            void cell.offsetWidth;
+            cell.classList.add("place-pop");
+            placedCells.push(cell);
+          }
+        }
+      }
+    }
+    if(placedCells.length){
+      setTimeout(()=>placedCells.forEach(e=>e.classList.remove("place-pop")),140);
+    }
+
     if(state.sound)tone(330,.045,"triangle");
     if(state.vibration)vibrate(8);
-    finishMove();
+    challengeProgress("moves",(state.challenge.progress||0)+1);finishMove();
   }
 }
 
@@ -714,19 +975,337 @@ function burst(n){
   }
 }
 
+
+/* ===== BLOCK FUSION META / PROGRESSION V3 ===== */
+const META_KEY="blockFusionMetaV3";
+const metaSaved=JSON.parse(localStorage.getItem(META_KEY)||"{}");
+state.xp=metaSaved.xp||0;
+state.level=metaSaved.level||1;
+state.totalLines=metaSaved.totalLines||0;
+state.totalGames=metaSaved.totalGames||0;
+state.maxCombo=metaSaved.maxCombo||0;
+state.totalScore=metaSaved.totalScore||0;
+state.mode=metaSaved.mode||"classic";
+state.achievements=metaSaved.achievements||[];
+state.chests=metaSaved.chests||0;
+state.daily=metaSaved.daily||{};
+state.challenge=metaSaved.challenge||{};
+state.stats8=metaSaved.stats8||{best:0,lines:0,games:0};
+state.stats10=metaSaved.stats10||{best:0,lines:0,games:0};
+
+const achievementDefs=[
+ {id:"first-line",name:"Первая линия",desc:"Очистить первую линию",icon:"✨",reward:50},
+ {id:"lines-10",name:"Разогрев",desc:"Очистить 10 линий",icon:"🔥",reward:100},
+ {id:"lines-100",name:"Мастер линий",desc:"Очистить 100 линий",icon:"💎",reward:300},
+ {id:"score-1000",name:"1000 очков",desc:"Набрать 1000 очков за игру",icon:"🏆",reward:100},
+ {id:"score-10000",name:"10K",desc:"Набрать 10 000 очков за игру",icon:"👑",reward:500},
+ {id:"combo-3",name:"Комбо ×3",desc:"Сделать комбо ×3",icon:"⚡",reward:100},
+ {id:"combo-5",name:"Комбо ×5",desc:"Сделать комбо ×5",icon:"💥",reward:300},
+ {id:"games-10",name:"В игре",desc:"Сыграть 10 партий",icon:"🎮",reward:150},
+ {id:"games-50",name:"Постоянный игрок",desc:"Сыграть 50 партий",icon:"🌟",reward:500},
+ {id:"master-8",name:"Мастер 8×8",desc:"Набрать 5000 очков на поле 8×8",icon:"8️⃣",reward:250},
+ {id:"master-10",name:"Мастер 10×10",desc:"Набрать 8000 очков на поле 10×10",icon:"🔟",reward:350}
+];
+
+const dailyDefs=[
+ {id:"lines20",name:"Линии дня",desc:"Очистить 20 линий",target:20,reward:150,type:"lines"},
+ {id:"score5000",name:"Большой результат",desc:"Набрать 5000 очков",target:5000,reward:200,type:"score"},
+ {id:"combo3",name:"Комбо дня",desc:"Сделать комбо ×3",target:3,reward:180,type:"combo"},
+ {id:"games3",name:"Три захода",desc:"Сыграть 3 партии",target:3,reward:120,type:"games"}
+];
+
+function saveMeta(){
+  const m={xp:state.xp,level:state.level,totalLines:state.totalLines,totalGames:state.totalGames,maxCombo:state.maxCombo,totalScore:state.totalScore,
+    mode:state.mode,achievements:state.achievements,chests:state.chests,daily:state.daily,challenge:state.challenge,
+    stats8:state.stats8,stats10:state.stats10,streak:state.streak};
+  localStorage.setItem(META_KEY,JSON.stringify(m));
+}
+function xpForLevel(l){return 250+(l-1)*125}
+function addXP(n){
+  const before=state.level; state.xp+=Math.max(0,n);
+  while(state.xp>=xpForLevel(state.level)){state.xp-=xpForLevel(state.level);state.level++;state.coins=(state.coins||0)+100;state.chests++;burst(80);toast(`Уровень ${state.level}! +100 🪙 + сундук 🎁`)}
+  saveMeta(); return state.level>before;
+}
+function awardAchievement(id){
+  if(state.achievements.includes(id))return;
+  const a=achievementDefs.find(x=>x.id===id); if(!a)return;
+  state.achievements.push(id);state.coins=(state.coins||0)+a.reward;state.chests++;
+  saveMeta(); burst(90); tone(740,.1,"triangle");setTimeout(()=>tone(1100,.18,"sine"),100);
+  toast(`${a.icon} ${a.name} • +${a.reward} 🪙 • 🎁 сундук`);
+}
+function checkAchievements(score,combo){
+  if(state.totalLines>=1)awardAchievement("first-line");
+  if(state.totalLines>=10)awardAchievement("lines-10");
+  if(state.totalLines>=100)awardAchievement("lines-100");
+  if(score>=1000)awardAchievement("score-1000");
+  if(score>=10000)awardAchievement("score-10000");
+  if(combo>=3)awardAchievement("combo-3");
+  if(combo>=5)awardAchievement("combo-5");
+  if(state.totalGames>=10)awardAchievement("games-10");
+  if(state.totalGames>=50)awardAchievement("games-50");
+  if(state.size===8&&score>=5000)awardAchievement("master-8");
+  if(state.size===10&&score>=8000)awardAchievement("master-10");
+}
+function dailyKey(){return new Date().toISOString().slice(0,10)}
+function resetDailyIfNeeded(){
+  const k=dailyKey();
+  if(state.daily.date!==k){state.daily={date:k,lines:0,score:0,combo:0,games:0,claimed:[]};saveMeta()}
+}
+function dailyProgress(def){
+  resetDailyIfNeeded();
+  const map={lines:state.daily.lines,score:state.daily.score,combo:state.daily.combo,games:state.daily.games};
+  return Math.min(def.target,map[def.type]||0);
+}
+function updateDaily(lines,score,combo,games=0){
+  resetDailyIfNeeded();state.daily.lines+=lines;state.daily.score+=score;state.daily.combo=Math.max(state.daily.combo,combo);state.daily.games+=games;
+  dailyDefs.forEach(d=>{if(dailyProgress(d)>=d.target&&!state.daily.claimed.includes(d.id)){state.daily.claimed.push(d.id);state.coins=(state.coins||0)+d.reward;state.chests++;toast(`🎯 Задание выполнено: +${d.reward} 🪙 +🎁`)}});
+  saveMeta();
+}
+function openProfile(){
+  showModal(`<div class="profile-modal">
+    <div class="profile-hero"><div class="avatar">BF</div><div><div class="profile-level">LEVEL ${state.level}</div><h2>Block Fusion</h2><div class="xpbar"><i style="width:${Math.min(100,state.xp/xpForLevel(state.level)*100)}%"></i></div><small>${state.xp} / ${xpForLevel(state.level)} XP</small></div></div>
+    <div class="profile-stats"><div><b>${state.totalScore.toLocaleString()}</b><small>Очки</small></div><div><b>${state.totalLines}</b><small>Линий</small></div><div><b>${state.maxCombo}</b><small>Макс. комбо</small></div><div><b>${state.totalGames}</b><small>Игр</small></div></div>
+    <h3>Результаты</h3><div class="mode-stat"><span>8×8</span><b>${state.stats8.best.toLocaleString()}</b><small>${state.stats8.lines} линий</small></div>
+    <div class="mode-stat"><span>10×10</span><b>${state.stats10.best.toLocaleString()}</b><small>${state.stats10.lines} линий</small></div>
+    <button class="secondary" id="closeProfile">Закрыть</button>
+  </div>`);
+  $("#closeProfile").onclick=hideModal;
+}
+function openAchievements(){
+  showModal(`<div class="ach-modal"><h2>🏆 Достижения</h2><div class="achievement-grid">${achievementDefs.map(a=>{
+    const done=state.achievements.includes(a.id);
+    return `<div class="achievement ${done?"done":""}"><div class="ach-icon">${done?a.icon:"🔒"}</div><div><b>${a.name}</b><small>${a.desc}</small><em>+${a.reward} 🪙</em></div></div>`
+  }).join("")}</div><button class="secondary" id="closeAch">Закрыть</button></div>`);
+  $("#closeAch").onclick=hideModal;
+}
+function openDaily(){
+  resetDailyIfNeeded();
+  showModal(`<div class="daily-modal"><h2>🎯 Задания дня</h2><p class="muted">Обновляются каждый день.</p>${dailyDefs.map(d=>{
+    const p=dailyProgress(d),done=p>=d.target,claimed=state.daily.claimed.includes(d.id);
+    return `<div class="daily-task"><div class="daily-task-top"><b>${d.name}</b><span>+${d.reward} 🪙</span></div><small>${d.desc}</small><div class="taskbar"><i style="width:${Math.min(100,p/d.target*100)}%"></i></div><div class="task-foot"><span>${p.toLocaleString()} / ${d.target.toLocaleString()}</span><b>${claimed?"✓ Получено":done?"ЗАБРАТЬ":"В процессе"}</b></div></div>`
+  }).join("")}<button class="secondary" id="closeDaily">Закрыть</button></div>`);
+  $("#closeDaily").onclick=hideModal;
+}
+function openChest(){
+  if(state.chests<=0){toast("Нет доступных сундуков 🎁");return}
+  const roll=Math.random(), reward=roll<.60?{coins:100,name:"Обычная награда"}:roll<.88?{coins:250,name:"Редкая награда"}:roll<.98?{coins:600,name:"Эпическая награда"}:{coins:1200,name:"Легендарная награда"};
+  state.chests--;const cb=$("#chestCount");if(cb)cb.textContent=state.chests;state.coins=(state.coins||0)+reward.coins;saveMeta();
+  showModal(`<div class="chest-modal"><div class="chest-glow">🎁</div><h2>${reward.name}</h2><div class="chest-reward">+${reward.coins} 🪙</div><p>Сундуков осталось: ${state.chests}</p><button class="primary" id="closeChest">Забрать</button></div>`);
+  burst(110);tone(520,.1,"triangle");setTimeout(()=>tone(1040,.25,"sine"),120);
+  $("#closeChest").onclick=hideModal;
+}
+function openModes(){
+  const modes=[
+    ["classic","Classic","Классическая бесконечная игра","🎮"],
+    ["zen","Zen","Спокойная игра без давления","🧘"],
+    ["time","Time Attack","Набрать максимум за 120 секунд","⏱️"],
+    ["challenge","Challenge","Особые цели и ограничения","🎯"],
+    ["endless","Endless","Ускоряющийся бесконечный режим","♾️"]
+  ];
+  showModal(`<div class="modes-modal"><h2>🎮 Режимы</h2>${modes.map(m=>`<button class="mode-card ${state.mode===m[0]?"selected":""}" data-mode="${m[0]}"><span>${m[3]}</span><div><b>${m[1]}</b><small>${m[2]}</small></div><i>${state.mode===m[0]?"✓":"›"}</i></button>`).join("")}<button class="secondary" id="closeModes">Закрыть</button></div>`);
+  $$(".mode-card").forEach(b=>b.onclick=()=>{state.mode=b.dataset.mode;saveMeta();hideModal();toast(`Режим: ${modes.find(m=>m[0]===state.mode)[1]}`);startGame()});
+  $("#closeModes").onclick=hideModal;
+}
+
+
+/* ===== BLOCK FUSION MEGA SYSTEMS V4 ===== */
+const MEGA_KEY="blockFusionMegaV4";
+const mega=JSON.parse(localStorage.getItem(MEGA_KEY)||"{}");
+state.special=mega.special||null;
+state.event=mega.event||null;
+state.streak=mega.streak||0;
+state.season=mega.season||1;
+state.seasonXP=mega.seasonXP||0;
+state.challenge=mega.challenge||{id:0,progress:0,done:false};
+state.rankScores=mega.rankScores||[];
+state.music=mega.music??true;
+state.lucky=mega.lucky||false;
+state.shopDay=mega.shopDay||"";
+state.shopDiscount=mega.shopDiscount||0;
+
+const challengeDefs=[
+ {name:"Линия за линией",desc:"Очистить 5 линий за 30 ходов",target:5,reward:250,type:"lines"},
+ {name:"Мегаход",desc:"Очистить 3 линии одним ходом",target:3,reward:350,type:"multi"},
+ {name:"Огненная серия",desc:"Достичь комбо ×5",target:5,reward:300,type:"combo"},
+ {name:"Без остановки",desc:"Сделать 15 успешных ходов",target:15,reward:400,type:"moves"},
+ {name:"Большая игра",desc:"Набрать 8000 очков",target:8000,reward:600,type:"score"}
+];
+const seasonRewards=[
+ {level:2,reward:"100 🪙"},{level:3,reward:"🎁 Сундук"},{level:5,reward:"Новый фон"},
+ {level:7,reward:"250 🪙"},{level:10,reward:"💎 Эпический предмет"},{level:15,reward:"500 🪙"},
+ {level:20,reward:"👑 Season Master"}
+];
+
+function saveMega(){
+ localStorage.setItem(MEGA_KEY,JSON.stringify({
+  special:state.special,event:state.event,streak:state.streak,season:state.season,seasonXP:state.seasonXP,
+  challenge:state.challenge,rankScores:state.rankScores,music:state.music,lucky:state.lucky,
+  shopDay:state.shopDay,shopDiscount:state.shopDiscount
+ }));
+}
+function megaXP(n){
+ state.seasonXP+=n;
+ while(state.seasonXP>=seasonXPFor(state.season)){state.seasonXP-=seasonXPFor(state.season);state.season++;seasonReward(state.season)}
+ saveMega();
+}
+function seasonXPFor(l){return 300+(l-1)*160}
+function seasonReward(level){
+ const r=seasonRewards.find(x=>x.level===level);
+ if(!r)return;
+ state.coins=(state.coins||0)+(level%2?100:150);
+ if(level===3||level===10){state.chests=(state.chests||0)+1}
+ burst(100);toast(`🌟 Season ${level} награда: ${r.reward}`);
+ if(typeof saveMeta==="function")saveMeta();
+}
+function seasonTitle(){
+ return state.season>=20?"SEASON MASTER":`SEASON ${state.season}`;
+}
+function specialLabel(type){
+ return {bomb:"💣 BOMB",lightning:"⚡ LIGHTNING",rainbow:"🌈 RAINBOW",freeze:"❄️ FREEZE",multiplier:"💎 ×2"}[type]||"";
+}
+function spawnSpecial(){
+ if(state.special)return;
+ const roll=Math.random();
+ if(roll>.075)return;
+ const types=["bomb","lightning","rainbow","freeze","multiplier"];
+ state.special=types[Math.floor(Math.random()*types.length)];
+ showFieldEvent(`${specialLabel(state.special)} появился на поле!`);
+ saveMega();
+}
+function consumeSpecial(rr,cc){
+ const s=state.special;if(!s)return;
+ state.special=null;
+ if(s==="bomb"){
+   for(let r=rr-1;r<=rr+1;r++)for(let c=cc-1;c<=cc+1;c++)
+    if(r>=0&&c>=0&&r<state.size&&c<state.size)state.board[r][c]=0;
+   megaXP(35);toast("💣 ВЗРЫВ! Соседние клетки очищены");
+ }else if(s==="lightning"){
+   for(let c=0;c<state.size;c++)state.board[rr][c]=0;
+   for(let r=0;r<state.size;r++)state.board[r][cc]=0;
+   megaXP(45);toast("⚡ МОЛНИЯ! Строка и колонка очищены");
+ }else if(s==="rainbow"){
+   megaXP(60);toast("🌈 RAINBOW! Следующая очистка усиливается");
+   state.lucky=true;
+ }else if(s==="freeze"){
+   state.event={type:"freeze",turns:3};toast("❄️ Поле заморожено на 3 хода");
+ }else if(s==="multiplier"){
+   state.lucky=true;megaXP(50);toast("💎 ×2 очки на следующий ход");
+ }
+ burst(90);
+ saveMega();
+}
+function showFieldEvent(text){
+ const old=$("#fieldEvent");if(old)old.remove();
+ const e=document.createElement("div");e.id="fieldEvent";e.className="field-event";e.innerHTML=`<b>${text}</b>`;
+ document.body.appendChild(e);setTimeout(()=>e.classList.add("show"),20);setTimeout(()=>e.remove(),2300);
+}
+function randomEvent(){
+ if(state.event?.type==="freeze"){state.event.turns--;if(state.event.turns<=0)state.event=null;return}
+ if(Math.random()>.035)return;
+ const events=[
+  ["lucky","🌟 LUCKY TURN","Следующая очистка даёт ×2 монет"],
+  ["meteor","☄️ METEOR SHOWER","На поле активировался бонус"],
+  ["rush","⚡ RUSH","Следующие 3 хода дают больше XP"]
+ ];
+ const e=events[Math.floor(Math.random()*events.length)];
+ state.event={type:e[0],turns:e[0]==="rush"?3:1};
+ if(e[0]==="lucky")state.lucky=true;
+ showFieldEvent(`${e[1]} — ${e[2]}`);saveMega();
+}
+function updateStreak(success){
+ if(success){state.streak++;if(state.streak===5)toast("🔥 HOT STREAK");if(state.streak===10)toast("🔥🔥 ON FIRE");if(state.streak>=20)toast("👑 UNSTOPPABLE")}
+ else state.streak=0;
+ if(state.streak>=(state.maxStreak||0))state.maxStreak=state.streak;
+ megaXP(success?8:0);saveMega();
+}
+function applyScoreMultiplier(score){
+ let mult=1;
+ if(state.lucky){mult=2;state.lucky=false}
+ if(state.streak>=5)mult+=.15;
+ if(state.streak>=10)mult+=.25;
+ return Math.round(score*mult);
+}
+function openSeason(){
+ const next=seasonXPFor(state.season),pct=Math.min(100,state.seasonXP/next*100);
+ showModal(`<div class="season-modal"><div class="season-logo">🌌</div><div class="season-kicker">${seasonTitle()}</div><h2>Cyber Galaxy</h2><p>Сезонный путь прогресса</p>
+ <div class="season-level"><b>Уровень ${state.season}</b><span>${state.seasonXP}/${next} XP</span></div><div class="seasonbar"><i style="width:${pct}%"></i></div>
+ <div class="season-track">${seasonRewards.map(r=>`<div class="season-node ${state.season>=r.level?"unlocked":""}"><b>${r.level}</b><span>${r.reward}</span></div>`).join("")}</div>
+ <button class="secondary" id="closeSeason">Закрыть</button></div>`);
+ $("#closeSeason").onclick=hideModal;
+}
+function openChallenges(){
+ const d=challengeDefs[state.challenge.id%challengeDefs.length],p=state.challenge.progress;
+ showModal(`<div class="challenge-modal"><div class="challenge-icon">🎯</div><h2>CHALLENGE</h2><p>${d.desc}</p>
+ <div class="challenge-progress"><b>${Math.min(p,d.target)} / ${d.target}</b><div class="taskbar"><i style="width:${Math.min(100,p/d.target*100)}%"></i></div></div>
+ <div class="challenge-reward">🏆 Награда: <b>${d.reward} 🪙</b></div>
+ ${state.challenge.done?'<div class="challenge-done">✓ ВЫПОЛНЕНО</div>':'<div class="muted">Испытание обновляется после прохождения.</div>'}
+ <button class="secondary" id="closeChallenge">Закрыть</button></div>`);
+ $("#closeChallenge").onclick=hideModal;
+}
+function challengeProgress(type,value){
+ const d=challengeDefs[state.challenge.id%challengeDefs.length];
+ if(state.challenge.done)return;
+ if(d.type===type)state.challenge.progress=Math.max(state.challenge.progress,value);
+ if((d.type==="lines"&&type==="lines")||(d.type==="multi"&&type==="multi")||(d.type==="combo"&&type==="combo")||(d.type==="moves"&&type==="moves")||(d.type==="score"&&type==="score")){
+  if(state.challenge.progress>=d.target){
+   state.challenge.done=true;state.coins=(state.coins||0)+d.reward;state.chests=(state.chests||0)+1;
+   toast(`🎯 CHALLENGE COMPLETE! +${d.reward} 🪙 +🎁`);burst(110);
+  }
+ }
+ saveMega();
+}
+function refreshShopDay(){
+ const day=new Date().toISOString().slice(0,10);
+ if(state.shopDay!==day){state.shopDay=day;state.shopDiscount=[0,10,15,20][Math.floor(Math.random()*4)];saveMega()}
+}
+function shopDiscountFor(item){
+ refreshShopDay();
+ return Math.max(0,Math.round(item.price*(1-state.shopDiscount/100)));
+}
+function addRankScore(){
+ const entry={score:state.score||0,size:state.size,date:new Date().toLocaleDateString()};
+ state.rankScores.push(entry);state.rankScores.sort((a,b)=>b.score-a.score);state.rankScores=state.rankScores.slice(0,10);saveMega();
+}
+function openRank(){
+ showModal(`<div class="rank-modal"><h2>🏆 Рейтинг</h2><p class="muted">Локальный рейтинг этого устройства</p>
+ ${state.rankScores.length?state.rankScores.map((x,i)=>`<div class="rank-row"><b>#${i+1}</b><span>${x.size}×${x.size}</span><strong>${x.score.toLocaleString()}</strong><small>${x.date}</small></div>`).join(""):'<div class="empty-rank">Пока нет результатов</div>'}
+ <button class="secondary" id="closeRank">Закрыть</button></div>`);
+ $("#closeRank").onclick=hideModal;
+}
+function toggleMusic(){
+ state.music=!state.music;saveMega();
+ if(state.music){ensureAudio();toast("🎵 Музыка включена")}else toast("🔇 Музыка выключена");
+}
+
 const shopItems=[
  {id:"neon",cat:"bg",name:"Neon Pulse",desc:"Неоновый фон",price:250,preview:"preview-neon"},
  {id:"sunset",cat:"bg",name:"Sunset",desc:"Тёплый градиент",price:300,preview:"preview-sunset"},
  {id:"ocean",cat:"bg",name:"Deep Ocean",desc:"Холодная атмосфера",price:350,preview:"preview-ocean"},
+ {id:"galaxy",cat:"bg",name:"Galaxy",desc:"Космическая атмосфера",price:800,preview:"preview-neon"},
+ {id:"aurora",cat:"bg",name:"Aurora",desc:"Северное сияние",price:950,preview:"preview-ocean"},
+ {id:"ember",cat:"bg",name:"Ember",desc:"Жаркое свечение",price:700,preview:"preview-sunset"},
+ {id:"midnight",cat:"bg",name:"Midnight",desc:"Глубокий тёмный стиль",price:550,preview:"preview-neon"},
+
  {id:"gem",cat:"skin",name:"Crystal",desc:"Кристальные фигурки",price:200,skin:"skin-gem"},
  {id:"fire",cat:"skin",name:"Inferno",desc:"Огненные фигурки",price:450,skin:"skin-fire"},
  {id:"ice",cat:"skin",name:"Ice Nova",desc:"Ледяные фигурки",price:500,skin:"skin-ice"},
  {id:"gold",cat:"skin",name:"Golden",desc:"Золотые фигурки",price:750,skin:"skin-gold"},
+ {id:"toxic",cat:"skin",name:"Toxic",desc:"Кислотное свечение",price:850,skin:"skin-gem"},
+ {id:"ruby",cat:"skin",name:"Ruby",desc:"Рубиновая серия",price:1000,skin:"skin-fire"},
+ {id:"diamond",cat:"skin",name:"Diamond",desc:"Алмазная серия",price:1400,skin:"skin-ice"},
+
  {id:"zen",cat:"fx",name:"Zen",desc:"Спокойная заставка",price:150},
  {id:"cosmic",cat:"fx",name:"Cosmic",desc:"Космическая заставка",price:600},
+ {id:"storm",cat:"fx",name:"Storm",desc:"Энергичный старт",price:850},
+ {id:"void",cat:"fx",name:"Void",desc:"Тёмный старт",price:1100},
+
  {id:"arcade",cat:"sound",name:"Arcade",desc:"Аркадные звуки",price:300},
- {id:"pulse",cat:"sound",name:"Pulse",desc:"Электронные звуки",price:400}
+ {id:"pulse",cat:"sound",name:"Pulse",desc:"Электронные звуки",price:400},
+ {id:"synth",cat:"sound",name:"Synthwave",desc:"Синтвейв-пак",price:650},
+ {id:"future",cat:"sound",name:"Future",desc:"Футуристичный звук",price:900}
 ];
+const todayKey=new Date().toISOString().slice(0,10);
+if(saved.dailyDate!==todayKey){saved.dailyDate=todayKey;saved.dailyClaimed=false;persist()}
 state.coins=saved.coins??500;
 state.owned=saved.owned||["neon","gem","zen","arcade"];
 state.equipped=saved.equipped||{bg:"neon",skin:"gem",fx:"zen",sound:"arcade"};
@@ -737,70 +1316,97 @@ function shopPreview(item){
   if(item.cat==="sound")return `<div class="item-preview preview-dark"><div style="font-size:38px">♫</div></div>`;
   return `<div class="item-preview preview-neon"><div class="splash-preview">✦</div></div>`;
 }
+function applyShopItem(item){
+  state.equipped[item.cat]=item.id;
+  saveShop();
+  applyCosmetics();
+  // Apply the purchased item immediately, without requiring a second click.
+  if(item.cat==="fx") showSplash();
+  if(item.cat==="sound"){ ensureAudio(); tone(620,.08,"sine"); setTimeout(()=>tone(900,.12,"triangle"),80); }
+  draw();
+}
+function showCoinPurchase(){
+  const packs=[
+    {coins:500,price:"£0.99",id:"coins500"},
+    {coins:1200,price:"£1.99",id:"coins1200"},
+    {coins:3000,price:"£4.99",id:"coins3000"},
+    {coins:7000,price:"£9.99",id:"coins7000"}
+  ];
+  showModal(`<div class="coin-shop">
+    <div class="coin-shop-head"><div><div class="shop-heading">Монеты</div><small>Покупка за реальные деньги</small></div><div class="wallet">🪙 <span>${fmt(state.coins)}</span></div></div>
+    <div class="coin-note">Оплата подключается через платёжный сервис. В этой версии игры кнопки уже подготовлены под реальные пакеты.</div>
+    <div class="coin-grid">${packs.map((p,i)=>`<button class="coin-pack ${i===2?"featured":""}" data-coin-pack="${p.id}">
+      ${i===2?'<b class="best-value">ПОПУЛЯРНЫЙ</b>':''}
+      <span class="coin-big">🪙</span><strong>${fmt(p.coins)}</strong><small>монет</small><b>${p.price}</b>
+    </button>`).join("")}</div>
+    <button class="secondary" id="closeCoins">Назад в магазин</button>
+  </div>`);
+  $$(".coin-pack").forEach(b=>b.onclick=()=>{
+    const p=packs.find(x=>x.id===b.dataset.coinPack);
+    toast(`Платёж ${p.price} за ${fmt(p.coins)} 🪙`);
+    // Real-money credit must be confirmed by a payment provider/webhook.
+    // No free coins are granted by this client-side button.
+  });
+  $("#closeCoins").onclick=()=>openShop("all");
+}
 function openShop(cat="all"){
   let current=cat;
-  const tabNames=[["all","Главная"],["bg","Фоны"],["skin","Фигуры"],["sound","Звуки"]];
+  const tabNames=[["all","Главная"],["bg","Фоны"],["skin","Фигуры"],["fx","Эффекты"],["sound","Звуки"]];refreshShopDay();
   const rarity={common:["ОБЫЧНЫЙ","r-common"],rare:["РЕДКИЙ","r-rare"],epic:["ЭПИЧЕСКИЙ","r-epic"],legendary:["ЛЕГЕНДАРНЫЙ","r-legendary"]};
-  const enhanced=[
-   {id:"neon",cat:"bg",name:"Neon Pulse",desc:"Неоновая атмосфера",price:250,r:"rare",icon:"✦"},
-   {id:"sunset",cat:"bg",name:"Sunset Drive",desc:"Тёплый закат",price:300,r:"rare",icon:"☀"},
-   {id:"ocean",cat:"bg",name:"Deep Ocean",desc:"Глубины океана",price:350,r:"epic",icon:"◉"},
-   {id:"galaxy",cat:"bg",name:"Galaxy",desc:"Космическая тема",price:800,r:"legendary",icon:"✦"},
-   {id:"gem",cat:"skin",name:"Crystal",desc:"Кристальные блоки",price:200,r:"rare",skin:"skin-gem"},
-   {id:"fire",cat:"skin",name:"Inferno",desc:"Огненные блоки",price:450,r:"epic",skin:"skin-fire"},
-   {id:"ice",cat:"skin",name:"Ice Nova",desc:"Ледяные блоки",price:500,r:"epic",skin:"skin-ice"},
-   {id:"gold",cat:"skin",name:"Golden",desc:"Золотые блоки",price:750,r:"legendary",skin:"skin-gold"},
-   {id:"arcade",cat:"sound",name:"Arcade",desc:"Аркадные звуки",price:300,r:"rare",icon:"♫"},
-   {id:"pulse",cat:"sound",name:"Pulse",desc:"Неоновый саунд",price:400,r:"epic",icon:"♬"},
-   {id:"cosmic",cat:"fx",name:"Cosmic Intro",desc:"Космическая заставка",price:600,r:"legendary",icon:"★"},
-   {id:"zen",cat:"fx",name:"Zen Intro",desc:"Спокойная заставка",price:150,r:"common",icon:"✧"}
-  ];
+  const enhanced=shopItems.map(x=>({
+    ...x,
+    r: x.price>=1000?"legendary":x.price>=600?"epic":x.price>=300?"rare":"common",
+    icon:x.cat==="sound"?"♫":x.cat==="fx"?"★":x.cat==="bg"?"✦":"◆"
+  }));
   function art(item){
     if(item.cat==="skin")return `<div class="shop-block ${item.skin}"><i></i><i></i><i></i><i></i><i></i><i></i></div>`;
     return `<div style="font-size:54px;font-weight:1000;filter:drop-shadow(0 10px 16px #0008)">${item.icon||"✦"}</div>`;
-  }
-  function purchaseReward(item){
-    const pop=document.createElement("div");pop.className="purchase-pop";
-    pop.innerHTML=`<div class="purchase-box"><div class="purchase-icon">${item.icon||"✦"}</div><div style="color:#68f2b4;font-weight:950;letter-spacing:1px">ПОЛУЧЕНО!</div><h2 style="margin:7px 0">${item.name}</h2><p style="color:#aab4ca">Предмет добавлен в твою коллекцию</p><button class="primary" id="rewardOk">ЭКИПИРОВАТЬ</button></div>`;
-    document.body.appendChild(pop);
-    burst(55);tone(880,.16,"triangle");setTimeout(()=>tone(1180,.22,"sine"),90);
-    pop.querySelector("#rewardOk").onclick=()=>{pop.remove();state.equipped[item.cat]=item.id;saveShop();applyCosmetics();draw()};
   }
   function draw(){
     const visible=enhanced.filter(x=>current==="all"||x.cat===current);
     const featured=enhanced.find(x=>x.id==="galaxy");
     showModal(`<div class="shop-modal">
       <div class="shop-top">
-       <div class="shop-topline"><div class="shop-heading">Магазин</div><div class="wallet">🪙 <span>${fmt(state.coins)}</span><button class="wallet-plus" id="earnCoins">+</button></div></div>
-       <div class="shop-banner"><div><b>ЕЖЕДНЕВНЫЙ ПОДАРОК</b><small>Забери бесплатные монеты</small></div><div class="gift">🎁</div></div>
+       <div class="shop-topline"><div class="shop-heading">Магазин</div><div class="wallet">🪙 <span>${fmt(state.coins)}</span><button class="wallet-plus" id="buyCoins">+</button></div></div>
+       <div class="shop-banner" id="buyCoinsBanner"><div><b>КУПИТЬ МОНЕТЫ</b><small>Пополнить баланс за реальные деньги</small></div><div class="gift">🪙</div></div>
       </div>
       <div class="shop-nav">${tabNames.map(([id,n])=>`<button class="${current===id?"active":""}" data-cat="${id}">${n}</button>`).join("")}</div>
       <div class="shop-scroll">
-       ${current==="all"?`<div class="daily-card"><div class="daily-head"><b>🔥 Серия входов</b><span>+100 🪙</span></div><div class="daily-progress"><i></i></div><button class="daily-btn ${saved.dailyClaimed?"claimed":""}" id="daily">${saved.dailyClaimed?"✓ Получено сегодня":"ЗАБРАТЬ НАГРАДУ"}</button></div>
-       <div class="shop-feature"><div class="feature-card"><div class="feature-copy"><div class="rarity">★ ${rarity[featured.r][0]}</div><h3>Galaxy Collection</h3><p>Легендарный космический комплект</p></div><div class="feature-art">🌌</div></div></div>`:""}
+       ${current==="all"?`<div class="daily-card"><div class="daily-head"><b>🔥 Ежедневный подарок</b><span>+100 🪙</span></div><div class="daily-progress"><i></i></div><button class="daily-btn ${saved.dailyClaimed?"claimed":""}" id="daily">${saved.dailyClaimed?"✓ Получено сегодня":"ЗАБРАТЬ НАГРАДУ"}</button></div>
+       <div class="shop-feature"><div class="feature-card"><div class="feature-copy"><div class="rarity">★ ЛЕГЕНДАРНЫЙ</div><h3>Galaxy Collection</h3><p>Легендарная космическая коллекция</p></div><div class="feature-art">🌌</div></div></div>`:""}
        <div class="item-grid">${visible.map(item=>{
-          const [rname,rcls]=rarity[item.r];const owned=state.owned.includes(item.id),eq=state.equipped[item.cat]===item.id;
-          return `<div class="shop-card ${rcls}"><div class="card-art"><span class="rarity-tag">${rname}</span><span class="card-price">${owned?"✓":"🪙 "+item.price}</span>${art(item)}</div><div class="card-body"><div class="card-name">${item.name}</div><div class="card-sub">${item.desc}</div><button class="card-btn ${eq?"equipped":owned?"":"buyable"}" data-buy="${item.id}">${eq?"✓ Экипировано":owned?"Экипировать":"Купить"}</button></div></div>`;
+          const [rname,rcls]=rarity[item.r];const owned=state.owned.includes(item.id),eq=state.equipped[item.cat]===item.id;const sale=state.shopDiscount>0&&current!=="all";const finalPrice=shopDiscountFor(item);
+          return `<div class="shop-card ${rcls}"><div class="card-art"><span class="rarity-tag">${rname}</span><span class="card-price">${owned?"✓":`🪙 ${finalPrice}${sale?` <s>${item.price}</s>`:""}`}</span>${art(item)}</div><div class="card-body"><div class="card-name">${item.name}</div><div class="card-sub">${item.desc}${sale&&!owned?` <span class="mega-shop-badge">-${state.shopDiscount}%</span>`:""}</div><button class="card-btn ${eq?"equipped":owned?"":"buyable"}" data-buy="${item.id}">${eq?"✓ Экипировано":owned?"Применить":"Купить"}</button></div></div>`;
        }).join("")}</div>
       </div>
       <button class="secondary" id="closeShop" style="width:calc(100% - 24px);margin:0 12px 12px">Закрыть</button>
     </div>`);
-    $$(".shop-nav").forEach(()=>{});
     $$(".shop-nav button").forEach(b=>b.onclick=()=>{current=b.dataset.cat;draw()});
     $$("[data-buy]").forEach(b=>b.onclick=()=>{
       const item=enhanced.find(x=>x.id===b.dataset.buy),owned=state.owned.includes(item.id);
       if(!owned){
-        if(state.coins<item.price){toast("Нужно больше монет 🪙");return}
-        state.coins-=item.price;state.owned.push(item.id);saveShop();purchaseReward(item);return;
+        const price=shopDiscountFor(item); if(state.coins<price){toast("Нужно больше монет 🪙");return}
+        state.coins-=price;
+        state.owned.push(item.id);
+        state.equipped[item.cat]=item.id;
+        saveShop();
+        applyCosmetics();
+        burst(55);
+        tone(880,.16,"triangle");setTimeout(()=>tone(1180,.22,"sine"),90);
+        toast(`${item.name} куплен и сразу применён ✓`);
+        draw();
+        return;
       }
-      state.equipped[item.cat]=item.id;saveShop();applyCosmetics();draw();tone(620,.1,"sine");toast("Предмет экипирован");
+      applyShopItem(item);
+      toast(`${item.name} применён ✓`);
     });
     $("#closeShop").onclick=hideModal;
-    $("#earnCoins").onclick=()=>toast("Монеты зарабатываются во время игры 🪙");
+    $("#buyCoins").onclick=showCoinPurchase;
+    $("#buyCoinsBanner").onclick=showCoinPurchase;
     const daily=$("#daily");
     if(daily)daily.onclick=()=>{
       if(saved.dailyClaimed){toast("Уже получено сегодня");return}
-      state.coins+=100;saved.dailyClaimed=true;saveShop();draw();burst(45);tone(900,.18,"triangle");toast("+100 🪙");
+      state.coins+=100;saved.dailyClaimed=true;saved.dailyDate=todayKey;saveShop();draw();burst(45);tone(900,.18,"triangle");toast("+100 🪙");
     };
   }
   draw();
@@ -818,7 +1424,7 @@ function applyCosmetics(){
   const skins={
     gem:["#b7a5ff","#64f4d0","#e5ddff"],fire:["#ff5733","#ffb21c","#e72d68"],ice:["#d9fbff","#61dfff","#668cff"],gold:["#fff0a0","#ffc62e","#b97900"]
   };
-  if(skins[state.equipped.skin]) colors.splice(0,colors.length,...skins[state.equipped.skin],...colors);
+  if(skins[state.equipped.skin]) colors.splice(0,colors.length,...skins[state.equipped.skin]);
 }
 
 function settingsModal(){
@@ -880,6 +1486,45 @@ document.addEventListener("visibilitychange",()=>{if(document.hidden&&state.game
 window.addEventListener("resize",()=>{if(!$("#game").classList.contains("hidden"))render()});
 applyCosmetics();updateMode();updateHud();
 setTimeout(()=>$("#splash").classList.add("hide"),2600);
+
+/* ===== META UI HOOKS ===== */
+function metaMenuButtons(){
+  if($("#metaPanel"))return;
+  const panel=document.createElement("div");panel.id="metaPanel";panel.className="meta-panel";
+  panel.innerHTML=`<button class="meta-button" id="seasonBtn">🌌<span>Сезон</span></button><button class="meta-button" id="rankBtn">🏆<span>Рейтинг</span></button><button class="meta-button" id="challengeBtn">🎯<span>Challenge</span></button><button class="meta-button" id="musicBtn">🎵<span>Музыка</span></button><button class="meta-button" id="profileBtn">👤<span>Профиль</span></button>
+  <button class="meta-button" id="dailyBtn">🎯<span>Задания</span></button>
+  <button class="meta-button" id="achBtn">🏆<span>Достижения</span></button>
+  <button class="meta-button" id="chestBtn">🎁<span>Сундук <b class="meta-badge" id="chestCount">${state.chests}</b></span></button>
+  <button class="meta-button" id="modesBtn">🎮<span>Режимы</span></button>`;
+  const target=document.querySelector(".menu-card,.menu,.home-menu");
+  if(target)target.appendChild(panel); else document.body.appendChild(panel);
+  $("#seasonBtn").onclick=openSeason;$("#rankBtn").onclick=openRank;$("#challengeBtn").onclick=openChallenges;$("#musicBtn").onclick=toggleMusic;$("#profileBtn").onclick=openProfile;$("#dailyBtn").onclick=openDaily;$("#achBtn").onclick=openAchievements;$("#chestBtn").onclick=openChest;$("#modesBtn").onclick=openModes;
+}
+setTimeout(metaMenuButtons,150);
+
+
+let modeTimerHandle=null;
+function startModeTimer(){
+  if(modeTimerHandle){clearInterval(modeTimerHandle);modeTimerHandle=null}
+  const old=$("#modeTimer");if(old)old.remove();
+  if(state.mode!=="time")return;
+  let left=120;const el=document.createElement("div");el.id="modeTimer";el.className="mode-timer";el.textContent=`⏱️ ${left}s`;document.body.appendChild(el);
+  modeTimerHandle=setInterval(()=>{left--;el.textContent=`⏱️ ${left}s`;if(left<=0){clearInterval(modeTimerHandle);modeTimerHandle=null;el.remove();if(typeof gameOver==="function")gameOver()}},1000);
+}
+
+
+function installMegaHUD(){
+ if(!$("#specialHud")){const s=document.createElement("div");s.id="specialHud";s.className="special-hud";s.textContent="";document.body.appendChild(s)}
+ if(!$("#streakHud")){const s=document.createElement("div");s.id="streakHud";s.className="streak-hud";document.body.appendChild(s)}
+ setInterval(()=>{
+   const s=$("#specialHud");if(s)s.textContent=state.special?specialLabel(state.special):"";
+   const h=$("#streakHud");if(h)h.textContent=state.streak>=2?`🔥 STREAK ×${state.streak}`:"";
+ },250);
+}
+setTimeout(installMegaHUD,250);
+
 </script>
 </body>
 </html>
+
+<script>const __startGameOriginal=startGame;startGame=function(){__startGameOriginal();startModeTimer()};</script>

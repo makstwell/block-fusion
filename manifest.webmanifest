@@ -3,7 +3,7 @@
   "short_name":"Block Fusion",
   "start_url":"./",
   "display":"standalone",
-  "background_color":"#07101f",
-  "theme_color":"#07101f",
+  "background_color":"#050812",
+  "theme_color":"#050812",
   "orientation":"portrait"
 }
