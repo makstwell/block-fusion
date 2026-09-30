@@ -13,12 +13,10 @@
   --cell:min(10.5vw,52px); --gap:4px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,html,body{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
-body{margin:0;width:100%;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:
+html,body{margin:0;width:100%;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:
 radial-gradient(circle at 15% 10%,rgba(124,92,255,.28),transparent 32%),
 radial-gradient(circle at 85% 85%,rgba(45,211,191,.18),transparent 30%),
 linear-gradient(145deg,var(--bg1),var(--bg2));}
-html,body{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
 body{min-height:100dvh;overflow-x:hidden;overscroll-behavior:none}
 button{font:inherit;color:inherit;border:0;cursor:pointer}
 .hidden{display:none!important}
@@ -58,7 +56,7 @@ background:linear-gradient(135deg,#fff,#9d8cff 55%,#5ff0c1);-webkit-background-c
 @keyframes clear{0%{transform:scale(1);opacity:1}55%{transform:scale(1.28);opacity:1}100%{transform:scale(.1);opacity:0}}
 .bottom{display:flex;flex-direction:column;gap:8px;margin-top:auto}
 .pieces{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-height:105px}
-.piece-slot{touch-action:none;touch-action:none;user-select:none;-webkit-user-select:none;
+.piece-slot{touch-action:none;user-select:none;-webkit-user-select:none;
 min-height:100px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;touch-action:none}
 .piece-grid{display:grid;gap:3px;transform-origin:center}
 .piece-cell{width:18px;height:18px;border-radius:4px;background:var(--pc);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 3px 7px rgba(0,0,0,.2)}
@@ -77,7 +75,7 @@ min-height:100px;border-radius:18px;background:rgba(255,255,255,.045);border:1px
 @keyframes fly{to{transform:translate(var(--x),var(--y)) rotate(500deg);opacity:0}}
 @media(max-height:700px){
   :root{--cell:min(9.5vw,44px)}
-  .pieces{min-height:82px}.piece-slot{touch-action:none;touch-action:none;user-select:none;-webkit-user-select:none;
+  .pieces{min-height:82px}.piece-slot{touch-action:none;user-select:none;-webkit-user-select:none;
 min-height:78px}.piece-cell{width:15px;height:15px}
 }
 @media(min-width:700px){:root{--cell:48px}}
@@ -107,7 +105,7 @@ min-height:78px}.piece-cell{width:15px;height:15px}
 }
 .cell.preview-ok{animation:previewPulse .55s ease-in-out infinite alternate}
 @keyframes previewPulse{to{filter:brightness(1.35);transform:scale(.93)}}
-.piece-slot{touch-action:none;touch-action:none;user-select:none;-webkit-user-select:none;
+.piece-slot{touch-action:none;user-select:none;-webkit-user-select:none;
 position:relative;overflow:visible}
 .piece-slot::before{
   content:"";position:absolute;inset:18%;border-radius:50%;
@@ -228,8 +226,7 @@ text-shadow:0 10px 50px rgba(124,92,255,.25)}
 .rarity-tag{position:absolute;left:7px;top:7px;font-size:8px;font-weight:1000;letter-spacing:.7px;padding:4px 6px;border-radius:7px;background:rgba(0,0,0,.35);backdrop-filter:blur(5px)}
 .r-rare .rarity-tag{color:#63b7ff}.r-epic .rarity-tag{color:#ca8cff}.r-legendary .rarity-tag{color:#ffd65a}
 .card-price{position:absolute;right:7px;top:7px;font-size:9px;padding:4px 6px;border-radius:7px;background:rgba(0,0,0,.38);color:#ffd65a;font-weight:950}
-.card-html,body{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;}
-body{padding:9px}.card-name{font-weight:900;font-size:13px}.card-sub{color:#8993aa;font-size:9px;margin:2px 0 8px;height:13px}
+.card-body{padding:9px}.card-name{font-weight:900;font-size:13px}.card-sub{color:#8993aa;font-size:9px;margin:2px 0 8px;height:13px}
 .card-btn{width:100%;padding:8px;border-radius:10px;background:rgba(255,255,255,.08);font-size:10px;font-weight:950}
 .card-btn.buyable{background:linear-gradient(135deg,#7c5cff,#5fe6c1);color:white}
 .card-btn.equipped{background:rgba(78,230,165,.16);color:#68f2b4;border:1px solid rgba(78,230,165,.25)}
@@ -249,8 +246,6 @@ body{padding:9px}.card-name{font-weight:900;font-size:13px}.card-sub{color:#8993
 @keyframes rewardPop{from{transform:scale(.1) rotate(-20deg);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes popIn{from{opacity:0}to{opacity:1}}
 </style>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon.svg">
 </head>
 <body>
 <div id="splash"><div class="splash-orb a"></div><div class="splash-orb b"></div><div class="splash-content">
@@ -550,14 +545,22 @@ function startDrag(ev){
   ensureAudio();
   const slot=ev.currentTarget,i=+slot.dataset.i,p=state.pieces[i];
   if(!p||p.used)return;
+
   const source=slot.querySelector('.piece-grid');
   const ghost=source.cloneNode(true);
   ghost.classList.add('drag-ghost');
-  ghost.style.gridTemplateColumns=`repeat(${p.shape[0].length},18px)`;
+  const sw=p.shape[0].length, sh=p.shape.length;
+  ghost.style.gridTemplateColumns=`repeat(${sw},18px)`;
+  ghost.style.width=`${sw*18+(sw-1)*3}px`;
+  ghost.style.height=`${sh*18+(sh-1)*3}px`;
   document.body.appendChild(ghost);
+
   const pos=getBoardPosition();
-  state.dragging={i,p,ghost,last:null,rect:pos.rect,cell:pos.cell,raf:0,queued:null,previewEls:[]};
-  try{slot.releasePointerCapture?.(ev.pointerId)}catch(e){}
+  state.dragging={
+    i,p,ghost,last:null,rect:pos.rect,cell:pos.cell,step:pos.cell-parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--gap')),
+    raf:0,queued:null,previewEls:[],pointerId:ev.pointerId
+  };
+  try{slot.setPointerCapture(ev.pointerId)}catch(e){}
   updateDrag(ev,true);
   window.addEventListener('pointermove',moveDrag,{passive:false});
   window.addEventListener('pointerup',endDrag,{passive:false,once:true});
@@ -566,19 +569,26 @@ function startDrag(ev){
 function updateDrag(ev,immediate=false){
   const d=state.dragging;if(!d)return;
   const x=ev.clientX,y=ev.clientY;
-  // Keep the visual block exactly centered on the pointer/finger.
-  // No artificial lift/offset: the block follows the cursor 1:1.
-  const gw=d.ghost.offsetWidth||36, gh=d.ghost.offsetHeight||36;
-  d.ghost.style.transform=`translate3d(${x-gw/2}px,${y-gh/2}px,0) scale(1.08)`;
+  const sw=d.p.shape[0].length, sh=d.p.shape.length;
+
+  // The visual block is centered exactly on the finger/cursor.
+  d.ghost.style.left=`${x}px`;
+  d.ghost.style.top=`${y}px`;
+  d.ghost.style.transform=`translate3d(-50%,-50%,0) scale(1.08)`;
+
   d.queued={x,y};
   const calc=()=>{
     d.raf=0;
     if(!state.dragging||!d.queued)return;
-    const q=d.queued,{rect,cell}=d;
-    const bx=q.x-rect.left,by=q.y-rect.top;
-    // Anchor the shape around its visual center, like a real mobile block puzzle.
-    const cc=Math.round(bx/cell-d.p.shape[0].length/2);
-    const rr=Math.round(by/cell-d.p.shape.length/2);
+    const q=d.queued,{rect,cell,step}=d;
+    const gap=cell-step;
+    const innerLeft=rect.left+gap;
+    const innerTop=rect.top+gap;
+
+    // Convert the pointer position to the top-left board cell of the shape,
+    // using the same geometric center as the visual ghost.
+    const cc=Math.round((q.x-innerLeft-step/2)/cell-(sw-1)/2);
+    const rr=Math.round((q.y-innerTop-step/2)/cell-(sh-1)/2);
     if(!d.last||d.last.rr!==rr||d.last.cc!==cc){
       d.last={rr,cc};
       preview(rr,cc,d.p.shape,canPlace(d.p.shape,rr,cc));
@@ -596,8 +606,6 @@ function endDrag(ev){
   if(!state.dragging)return;
   ev.preventDefault();
   const d=state.dragging;
-  // Flush the final pointer position synchronously. This removes the
-  // one-frame delay that previously caused drops to use the old cell.
   updateDrag(ev,true);
   window.removeEventListener('pointermove',moveDrag);
   window.removeEventListener('pointercancel',endDrag);
@@ -807,6 +815,5 @@ window.addEventListener("resize",()=>{if(!$("#game").classList.contains("hidden"
 applyCosmetics();updateMode();updateHud();
 setTimeout(()=>$("#splash").classList.add("hide"),2600);
 </script>
-<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));}</script>
 </body>
 </html>
